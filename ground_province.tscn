@@ -1,12 +1,44 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgytrqmx2i8et"]
+[gd_scene load_steps=5 format=3 uid="uid://cgytrqmx2i8et"]
 
-[ext_resource type="Script" uid="uid://s2rkvnnenm02" path="res://ground_province.gd" id="1_8eys8"]
+[ext_resource type="Script" uid="uid://s2rkvnnenm02" path="res://scripts/ground_province.gd" id="1_8eys8"]
+[ext_resource type="Script" uid="uid://bqxt7qoihqa8k" path="res://scripts/provincal_area.gd" id="2_503kd"]
+[ext_resource type="Script" uid="uid://dox7plficl5mc" path="res://scripts/border_lines.gd" id="4_xprqh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_503kd"]
 
 [node name="ground_province" type="Node2D"]
+material = SubResource("ShaderMaterial_503kd")
 script = ExtResource("1_8eys8")
 
-[node name="Capital" type="ColorRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Capital" type="Node2D" parent="."]
+visible = false
+z_index = 1
 
-[node name="Poly" type="Polygon2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="Capital"]
+scale = Vector2(0.0416667, 0.0416667)
+color = Color(1, 1, 0.635294, 0.509804)
+polygon = PackedVector2Array(0, -192, -48, -48, -192, 0, -48, 48, 0, 192, 48, 48, 192, 0, 48, -48)
+uv = PackedVector2Array(0, -192, -48, -48, -192, 0, -48, 48, 0, 192, 48, 48, 192, 0, 48, -48)
+
+[node name="provincal_area" type="Area2D" parent="."]
+script = ExtResource("2_503kd")
+
+[node name="poly" type="Polygon2D" parent="provincal_area"]
+visible = false
+clip_children = 2
+
+[node name="select_poly" type="CollisionPolygon2D" parent="provincal_area"]
+
+[node name="border_lines" type="CanvasGroup" parent="."]
+self_modulate = Color(1, 1, 1, 0.0941176)
+script = ExtResource("4_xprqh")
+
+[node name="name_label" type="Label" parent="."]
+visible = false
+z_index = 2
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Hello"
+
+[connection signal="mouse_entered" from="provincal_area" to="." method="mouse_entered"]
+[connection signal="mouse_exited" from="provincal_area" to="." method="mouse_exited"]

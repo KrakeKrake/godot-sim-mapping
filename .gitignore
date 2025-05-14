@@ -10,6 +10,7 @@ export_credentials.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
+*.uid
 
 # Mono-specific ignores
 .mono/

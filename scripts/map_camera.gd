@@ -4,8 +4,8 @@ extends Camera2D
 
 
 # Zoom properties
-@export var min_zoom: float = 0.3
-@export var max_zoom: float = 50.0
+@export var min_zoom: float = 0.85
+@export var max_zoom: float = 100.0
 @export var zoom_speed: float = 0.1
 @export var zoom_margin: float = 0.1
 
@@ -21,13 +21,7 @@ var drag_start_pos: Vector2
 var drag_current_pos: Vector2
 
 func _ready() -> void:
-	var parent = get_parent()
-	if parent.has_node("MapData"):
-		var terrain = parent.get_node("MapData")
-		map_size = terrain.size
-	else:
-		# I think this is impossible to trigger?
-		map_size = Vector2(1920, 1080)
+	map_size = Vector2(1920 * 1.0, 1080 * 1.0)
 	
 	zoom = Vector2(1.0, 1.0)
 	target_zoom = zoom
@@ -36,7 +30,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if smoothing_enabled and zoom != target_zoom:
 		zoom = zoom + (target_zoom - zoom) * (smoothing_speed * delta)
-	print(position)
 	var dir = Vector2()
 	if Input.is_action_just_pressed("ui_right"):
 		dir.x += 1
@@ -49,8 +42,9 @@ func _process(delta: float) -> void:
 	dir = dir.normalized() 	
 	
 	position += dir * pan_speed * delta / zoom.x
-	position.x = clamp(position.x, 0, map_size.x)
-	position.y = clamp(position.y, 0, map_size.y)
+	position.x = clamp(position.x, -map_size.x/2, map_size.x/2)
+	position.y = clamp(position.y, -map_size.y/2, map_size.y/2)
+	#wrap_position()
 	
 	
 func _input(event: InputEvent) -> void:
@@ -78,10 +72,15 @@ func _input(event: InputEvent) -> void:
 		drag_current_pos = event.position
 		position -= (drag_current_pos - drag_start_pos) / zoom.x
 		drag_start_pos = drag_current_pos
-		
-	position.x = clamp(position.x, 0, map_size.x)
-	position.y = clamp(position.y, 0, map_size.y)
+	
+	position.x = clamp(position.x, -map_size.x/2, map_size.x/2)
+	position.y = clamp(position.y, -map_size.y/2, map_size.y/2)
+	#wrap_position()
 	
 	
-	
-	
+func wrap_position():
+	# Wrap horizontally
+	if position.x < 0:
+		position.x += map_size.x
+	elif position.x > map_size.x:
+		position.x -= map_size.x

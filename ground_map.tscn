@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://dgn0fcasdw4pe"]
+
+[ext_resource type="Script" uid="uid://bk2tu8afhwo04" path="res://scripts/map.gd" id="1_g7x3s"]
+[ext_resource type="Script" uid="uid://bx8svd0hg4adi" path="res://scripts/map_camera.gd" id="2_nfcoc"]
+[ext_resource type="Shader" uid="uid://cuiuimfcen2r4" path="res://shaders/default.gdshader" id="4_vyoo4"]
+[ext_resource type="Script" uid="uid://dhntmvfuu2xs1" path="res://scripts/terrain_setup.gd" id="4_xu8sa"]
+[ext_resource type="Script" uid="uid://cri403e4ji463" path="res://info.gd" id="5_vyoo4"]
+
+[sub_resource type="Shader" id="Shader_vyoo4"]
+code = "shader_type canvas_item;
+
+
+void fragment() {
+	vec2 wrapped_uv = fract(UV);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1f8ci"]
+shader = SubResource("Shader_vyoo4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vyoo4"]
+frequency = 0.044
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 4.69
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4cf1u"]
+width = 1920
+height = 1080
+seamless = true
+seamless_blend_skirt = 0.275
+noise = SubResource("FastNoiseLite_vyoo4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfcoc"]
+shader = ExtResource("4_vyoo4")
+shader_parameter/noise = SubResource("NoiseTexture2D_4cf1u")
+shader_parameter/debug_options = 0
+shader_parameter/time_scale = 0.0
+
+[node name="Map" type="Node2D"]
+physics_interpolation_mode = 1
+material = SubResource("ShaderMaterial_1f8ci")
+script = ExtResource("1_g7x3s")
+
+[node name="Provinces" type="Node2D" parent="."]
+z_index = 3
+
+[node name="Selection_poly" type="Node" parent="Provinces"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(960, 540)
+script = ExtResource("2_nfcoc")
+
+[node name="Terrain" type="Node2D" parent="."]
+script = ExtResource("4_xu8sa")
+
+[node name="terrain_shader" type="ColorRect" parent="Terrain"]
+material = SubResource("ShaderMaterial_nfcoc")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.239216, 1, 1, 1)
+
+[node name="info" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_vyoo4")
+
+[node name="SubViewport" type="SubViewport" parent="."]
