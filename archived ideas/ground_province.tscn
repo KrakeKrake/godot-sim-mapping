@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgytrqmx2i8et"]
+[gd_scene format=3 uid="uid://cgytrqmx2i8et"]
 
 [ext_resource type="Script" uid="uid://s2rkvnnenm02" path="res://scripts/ground_province.gd" id="1_8eys8"]
 [ext_resource type="Script" uid="uid://bqxt7qoihqa8k" path="res://scripts/provincal_area.gd" id="2_503kd"]
