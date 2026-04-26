@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cgytrqmx2i8et"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_503kd"]
+
+[node name="ground_province" type="Node2D" unique_id=1349568835]
+material = SubResource("ShaderMaterial_503kd")
+
+[node name="Capital" type="Node2D" parent="." unique_id=1440592921]
+visible = false
+z_index = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="Capital" unique_id=1819000219]
+scale = Vector2(0.0416667, 0.0416667)
+color = Color(1, 1, 0.635294, 0.509804)
+polygon = PackedVector2Array(0, -192, -48, -48, -192, 0, -48, 48, 0, 192, 48, 48, 192, 0, 48, -48)
+uv = PackedVector2Array(0, -192, -48, -48, -192, 0, -48, 48, 0, 192, 48, 48, 192, 0, 48, -48)
+
+[node name="provincal_area" type="Area2D" parent="." unique_id=1374007547]
+
+[node name="poly" type="Polygon2D" parent="provincal_area" unique_id=1216412872]
+visible = false
+clip_children = 2
+
+[node name="select_poly" type="CollisionPolygon2D" parent="provincal_area" unique_id=840144130]
+
+[node name="border_lines" type="CanvasGroup" parent="." unique_id=660544199]
+self_modulate = Color(1, 1, 1, 0.0941176)
+
+[node name="name_label" type="Label" parent="." unique_id=2063340455]
+visible = false
+z_index = 2
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Hello"
+
+[connection signal="mouse_entered" from="provincal_area" to="." method="mouse_entered"]
+[connection signal="mouse_exited" from="provincal_area" to="." method="mouse_exited"]
