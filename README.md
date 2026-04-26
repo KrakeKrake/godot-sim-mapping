@@ -40,10 +40,10 @@ But the mountain or trench isn't just one pixel, it has to be "stamped" into the
 Beyond that plates are either continental or oceanic (which sets their "base height"), which explains the stark differenence between them
 Blending between the plates is the hardest obstacle to overcome.
 
-### Mix between Plate and Noise (Idea, not worked on currently)
-  Using plates to determine a "base elevation" and then slapping noise ontop of it to create continents
-  Anticipated the same issue as before, plate borders is a huge problem, it is hard to effect many pixels like that.
-
+### Map Graph
+This is currently empty, as I want to explore the other ideas to their fullest first.
+I would be aiming for a more complex implementation similar to: https://azgaar.github.io/Fantasy-Map-Generator/
+Which is an amazing project for quickly making fantasy maps.
 
 
 
