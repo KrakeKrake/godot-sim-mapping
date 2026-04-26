@@ -1,5 +1,11 @@
 # Currently be Rewritten 
 Currently I am rewriting this in my spare time under different architectures for testing.
+
+## Next Steps
+The Noise is the most promising in order to get "realistic" looking planets, working on the border between the two plates is my current focus.
+Should it turn out well, a combination between the plates and noise will be used, possible then with the graphic components of the shader noise. Taking the best elements from all 3 developments.
+
+
 ## Experimenting with the following ideas:
 ### Initial Shading Method **(Is discussed below as the "main" method, this is no longer the case!)**:
   Used just 4 noises (and only one for elevation!)
@@ -36,3 +42,7 @@ Blending between the plates is the hardest obstacle to overcome.
 ### Mix between Plate and Noise (Idea, not worked on currently)
   Using plates to determine a "base elevation" and then slapping noise ontop of it to create continents
   Anticipated the same issue as before, plate borders is a huge problem, it is hard to effect many pixels like that.
+
+
+
+
