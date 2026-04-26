@@ -2,8 +2,8 @@
 Currently I am rewriting this in my spare time under different architectures for testing.
 
 ## Next Steps
-The Noise is the most promising in order to get "realistic" looking planets, working on the border between the two plates is my current focus.
-Should it turn out well, a combination between the plates and noise will be used, possible then with the graphic components of the shader noise. Taking the best elements from all 3 developments.
+The Plates is the most promising in order to get "realistic" looking planets, working on the border between the two plates is my current focus.
+Should it turn out well, a combination between the plates and noise will be used, possibly then with the graphic components of the shader noise. Taking the best elements from all 3 developments.
 
 
 ## Experimenting with the following ideas:
