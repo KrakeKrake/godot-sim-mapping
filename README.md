@@ -16,6 +16,7 @@ Should it turn out well, a combination between the plates and noise will be used
 #### Current Look
   <img width="1686" height="963" alt="image" src="https://github.com/user-attachments/assets/bd6b3330-cd4b-4e24-8066-024e5e7cb8f1" />
   Was the most feature complete of the ideas, however, not necessarily the best for compute in the long run
+
 ### Purely Noise generated + large image as map:
   Low resolution and performance compared to shaders.
   Can be computed on.
@@ -38,7 +39,7 @@ This is because along borders between plates there either needs to be: Mountains
 But the mountain or trench isn't just one pixel, it has to be "stamped" into the pixels around it.
 Beyond that plates are either continental or oceanic (which sets their "base height"), which explains the stark differenence between them
 Blending between the plates is the hardest obstacle to overcome.
-### Delauny Triangulation: Idk how that would even work.
+
 ### Mix between Plate and Noise (Idea, not worked on currently)
   Using plates to determine a "base elevation" and then slapping noise ontop of it to create continents
   Anticipated the same issue as before, plate borders is a huge problem, it is hard to effect many pixels like that.
