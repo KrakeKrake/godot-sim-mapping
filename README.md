@@ -6,7 +6,25 @@ The Plates is the most promising in order to get "realistic" looking planets, wo
 Should it turn out well, a combination between the plates and noise will be used, possibly then with the graphic components of the shader noise. Taking the best elements from all 3 developments.
 
 
-## Experimenting with the following ideas:
+## Current State
+<img width="1979" height="754" alt="image" src="https://github.com/user-attachments/assets/9082da7f-faea-4644-8f62-75c074b244c9" />
+As of the latest push this is what the map looks like, it is, amazingly, the result of *another* rewrite. I think this is the direction I will continue to pursue. 
+This is the graph map, previously I didn't want to pursue it, but since I worked on it (this video here was very helpful in understanding how to create voronoi diagrams: https://www.youtube.com/watch?v=I6Fen2Ac-1U, in addition to this blog by Red Blob Games: http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/, and this one by the creator of Azgaar's Fantasy Map Generator: https://azgaar.wordpress.com/2017/03/30/voronoi-graph/)
+
+My previous hesitence on this idea came from: Provinces are dirty. And I maintain that, they are not perfect. In a perfect world we could create provinces from a heightmap, which is still an avenue I may explore, but right now this map generates a number of provinces, and then gets data from them, from a heightmap. (Earth Pictured Below, sort of).
+
+<img width="3114" height="1238" alt="image" src="https://github.com/user-attachments/assets/95576255-25a3-491f-942e-1d137c0de833" />
+Notably missing the UK, Carribean, Japan and all of South East Asia... because sea levels need tuning, WAKE UP TO CLIMATE CHANGE GUYS THIS IS WHAT IS GONNA HAPPEN.
+With high province counts (this earth map was 20,000 provinces) the map actually looks ok. A problem I do have though is, ocean provinces, I want to combine them. So I will have to generate provinces that are then removed, basically wasting resources. But that isn't an *awful* tradeoff. Performance is... not great, lots of primitives being drawn every frame, generation is O(n^2) sadly, I do plan to rewrite it with GDExtension some day for more performance, for testing this is acceptable though.
+
+## Features I am proud of
+- Multi threading generation. A problem with basically every map I have worked on, and a killer of provinces before. To achieve this I generate one set of provinces first, single threaded (about 100-300 of them I find is best), then in each of those I create more provinces, with threads. However this has drawbacks, namely that now provinces are more likely to have jagged uniform lines that look rather unnatrual. But I found that is only visible in some scenarios, and if you are looking for it.
+- Wind. I modeled wind. Yes, wind. Honestly much easier than I anticipated, getting realistic looking wind currents (looking is the key word) was easier than I expected. The x and y direction of the wind comes from two different noises, and the strength of the current comes from a third. Each province now has a wind direction and speed.
+- Moisture, the aim of the wind above was to try and model moisture, it is still a work in progress, but does work. Essentially wind picks up moisture and sends it inland. This will be combined with a few other features to create basic biomes.
+- Provinces without gaps. A major problem I faced before was that the provinces would be, what felt like randomly, deleted when I tried to trim all of their areas to just the screen area. However thanks to the youtube video I linked above, I apporached provinces with a new idea in mind, not using delunay triangulation, but bisectors. Which is much simpler to understand.
+
+
+## Experimented with the following ideas, may be used going forwards but will unlikely be main methods:
 ### Initial Shading Method **(Is discussed below as the "main" method, this is no longer the case!)**:
   Used just 4 noises (and only one for elevation!)
   My only implementation of Biomes, allbeit very simple
@@ -39,11 +57,6 @@ This is because along borders between plates there either needs to be: Mountains
 But the mountain or trench isn't just one pixel, it has to be "stamped" into the pixels around it.
 Beyond that plates are either continental or oceanic (which sets their "base height"), which explains the stark differenence between them
 Blending between the plates is the hardest obstacle to overcome.
-
-### Map Graph
-This is currently empty, as I want to explore the other ideas to their fullest first.
-I would be aiming for a more complex implementation similar to: https://azgaar.github.io/Fantasy-Map-Generator/
-Which is an amazing project for quickly making fantasy maps.
 
 
 
