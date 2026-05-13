@@ -2,8 +2,8 @@
 Currently I am rewriting this in my spare time under different architectures for testing.
 
 ## Next Steps
-The Plates is the most promising in order to get "realistic" looking planets, working on the border between the two plates is my current focus.
-Should it turn out well, a combination between the plates and noise will be used, possibly then with the graphic components of the shader noise. Taking the best elements from all 3 developments.
+I have started graph map development and will continue working on it when I get free days (like today yayy, but not tommorow :( ), the next step is to work a bit further on moisture and then get biomes working.
+The step after that will be working on texturing, then likely a review of my system so far, optimisations, and where to head next regarding simulation hopefully.
 
 
 ## Current State
@@ -15,17 +15,20 @@ My previous hesitence on this idea came from: Provinces are dirty. And I maintai
 
 <img width="3114" height="1238" alt="image" src="https://github.com/user-attachments/assets/95576255-25a3-491f-942e-1d137c0de833" />
 Notably missing the UK, Carribean, Japan and all of South East Asia... because sea levels need tuning, WAKE UP TO CLIMATE CHANGE GUYS THIS IS WHAT IS GONNA HAPPEN.
-With high province counts (this earth map was 20,000 provinces) the map actually looks ok. A problem I do have though is, ocean provinces, I want to combine them. So I will have to generate provinces that are then removed, basically wasting resources. But that isn't an *awful* tradeoff. Performance is... not great, lots of primitives being drawn every frame, generation is O(n^2) sadly, I do plan to rewrite it with GDExtension some day for more performance, for testing this is acceptable though.
+
+With high province counts (this earth map was 20,000 provinces) the map actually looks better than expected, it is distringuisable but not incredible. I believe that as a problem will cease with custom maps, as the earth is too easy to have expectations for. 
+A problem I do have though is, ocean provinces, I want to combine them. So I will have to generate provinces that are then removed, basically wasting resources. But that isn't an *awful* tradeoff. Performance is... not great, lots of primitives being drawn every frame, generation is O(n^2) sadly, I do plan to rewrite it with GDExtension some day for more performance, for testing this is acceptable though.
 
 ## Features I am proud of
 - Multi threading generation. A problem with basically every map I have worked on, and a killer of provinces before. To achieve this I generate one set of provinces first, single threaded (about 100-300 of them I find is best), then in each of those I create more provinces, with threads. However this has drawbacks, namely that now provinces are more likely to have jagged uniform lines that look rather unnatrual. But I found that is only visible in some scenarios, and if you are looking for it.
 - Wind. I modeled wind. Yes, wind. Honestly much easier than I anticipated, getting realistic looking wind currents (looking is the key word) was easier than I expected. The x and y direction of the wind comes from two different noises, and the strength of the current comes from a third. Each province now has a wind direction and speed.
 - Moisture, the aim of the wind above was to try and model moisture, it is still a work in progress, but does work. Essentially wind picks up moisture and sends it inland. This will be combined with a few other features to create basic biomes.
 - Provinces without gaps. A major problem I faced before was that the provinces would be, what felt like randomly, deleted when I tried to trim all of their areas to just the screen area. However thanks to the youtube video I linked above, I apporached provinces with a new idea in mind, not using delunay triangulation, but bisectors. Which is much simpler to understand.
+- Heightmap Compatibility. All of the methods below I experiment with can output to heightmaps, so my effort on them is not entirely wasted. In testing infact I am using a heightmap that I created with the "Purely Noise Generated" method. Also, as above with the earth, heightmaps are a great compatibility layer, so long as any generator can output to a heightmap, basically any map can be used, including ones that much improve upon mine, such as the Terrain Diffusion project, which I salivate at.
 
 
 ## Experimented with the following ideas, may be used going forwards but will unlikely be main methods:
-### Initial Shading Method **(Is discussed below as the "main" method, this is no longer the case!)**:
+### Initial Shading Method:
   Used just 4 noises (and only one for elevation!)
   My only implementation of Biomes, allbeit very simple
   Shader texture generation meant infinite zoom, no generating images once a map is made.
